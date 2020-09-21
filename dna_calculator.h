@@ -15,6 +15,7 @@ class DNAcalculator{
 
     int lines;
     double sum;
+    double numBigrams;
 
     int squares_sum;
 

@@ -5,6 +5,7 @@ DNAcalculator::DNAcalculator(string fileName){
   file = fileName;
   lines = 0;
   sum = 0;
+  numBigrams = 0;
   squares_sum = 0;
   countA = 0;
   countC = 0;
@@ -30,6 +31,26 @@ DNAcalculator::DNAcalculator(string fileName){
   countGC = 0;
   countGT = 0;
   countGG = 0;
+
+  probAA = 0;
+  probAC = 0;
+  probAT = 0;
+  probAG = 0;
+
+  probCA = 0;
+  probCC = 0;
+  probCT = 0;
+  probCG = 0;
+
+  probTA = 0;
+  probTC = 0;
+  probTT = 0;
+  probTG = 0;
+
+  probGA = 0;
+  probGC = 0;
+  probGT = 0;
+  probGG = 0;
 }
 
 //Calculates the mean by dividing total nucleotides by number o lines
@@ -47,7 +68,6 @@ void DNAcalculator::calcNucleotideProbability(){
 
 //Calculates the probability of finding each bigram within the file
 void DNAcalculator::calcBigramProbability(){
-  int numBigrams = sum/2;
 
   probAA = countAA/numBigrams;
   probAC = countAC/numBigrams;
@@ -115,60 +135,71 @@ void DNAcalculator::processFile(){
             countG += 1;
           }
         }
-        if(i != line.length()-2){
-          next = tolower(line.at(i+1));
-          string bigram = "";
-          bigram += current;
-          bigram += next;
-          if(bigram == "aa"){
-            countAA += 1;
-          }
-          if(bigram == "ac"){
-            countAC += 1;
-          }
-          if(bigram == "at"){
-            countAT += 1;
-          }
-          if(bigram == "ag"){
-            countAG += 1;
-          }
-          if(bigram == "ca"){
-            countCA += 1;
-          }
-          if(bigram == "cc"){
-            countCC += 1;
-          }
-          if(bigram == "ct"){
-            countCT += 1;
-          }
-          if(bigram == "cg"){
-            countCG += 1;
-          }
-          if(bigram == "ta"){
-            countTA += 1;
-          }
-          if(bigram == "tc"){
-            countTC += 1;
-          }
-          if(bigram == "tt"){
-            countTT += 1;
-          }
-          if(bigram == "tg"){
-            countTG += 1;
-          }
-          if(bigram == "ga"){
-            countGA += 1;
-          }
-          if(bigram == "gc"){
-            countGC += 1;
-          }
-          if(bigram == "gt"){
-            countGT += 1;
-          }
-          if(bigram == "gg"){
-            countGG += 1;
-          }
+      }
+      //if the line length is odd, then add the first character to the end
+      //of the string. this way, the last bigram is counted as the last
+      //nucleotide + the first
+      // cout << (line.length()-1)%2 << endl;
+      string bigramline = line;
+      if((bigramline.length()-1)%2 == 1){
+        // cout << bigramline.at(0) << endl;
+        bigramline.at(line.length()-1) = bigramline.at(0);
+        // cout << bigramline << endl;
+      }
+      for(int i = 0; i < bigramline.length()-1; i += 2){
+        string bigram = "";
+        bigram += tolower(bigramline.at(i));
+        bigram += tolower(bigramline.at(i+1));
+        // cout << bigram << endl;
+        if(bigram == "aa"){
+          countAA += 1;
         }
+        if(bigram == "ac"){
+          countAC += 1;
+        }
+        if(bigram == "at"){
+          countAT += 1;
+        }
+        if(bigram == "ag"){
+          countAG += 1;
+        }
+        if(bigram == "ca"){
+          countCA += 1;
+        }
+        if(bigram == "cc"){
+          countCC += 1;
+        }
+        if(bigram == "ct"){
+          countCT += 1;
+        }
+        if(bigram == "cg"){
+          countCG += 1;
+        }
+        if(bigram == "ta"){
+          countTA += 1;
+        }
+        if(bigram == "tc"){
+          countTC += 1;
+        }
+        if(bigram == "tt"){
+          countTT += 1;
+        }
+        if(bigram == "tg"){
+          countTG += 1;
+        }
+        if(bigram == "ga"){
+          countGA += 1;
+        }
+        if(bigram == "gc"){
+          countGC += 1;
+        }
+        if(bigram == "gt"){
+          countGT += 1;
+        }
+        if(bigram == "gg"){
+          countGG += 1;
+        }
+        numBigrams += 1;
       }
     }
     myfile.close();
@@ -265,28 +296,28 @@ void DNAcalculator::outputToFile(){
   outFile << "\n";
 
   outFile << "-----bigram counter-----" << "\n";
-  outFile << "AA count: " << countAA << "\n";
-  outFile << "AC count: " << countAC << "\n";
-  outFile << "AT count: " << countAT << "\n";
-  outFile << "AG count: " << countAG << "\n";
+  outFile << "AA probability: " << probAA << "\n";
+  outFile << "AC probability: " << probAC << "\n";
+  outFile << "AT probability: " << probAT << "\n";
+  outFile << "AG probability: " << probAG << "\n";
   outFile << "\n";
 
-  outFile << "CA count: " << countCA << "\n";
-  outFile << "CC count: " << countCC << "\n";
-  outFile << "CT count: " << countCT << "\n";
-  outFile << "CG count: " << countCG << "\n";
+  outFile << "CA probability: " << probCA << "\n";
+  outFile << "CC probability: " << probCC << "\n";
+  outFile << "CT probability: " << probCT << "\n";
+  outFile << "CG probability: " << probCG << "\n";
   outFile << "\n";
 
-  outFile << "TA count: " << countTA << "\n";
-  outFile << "TC count: " << countTC << "\n";
-  outFile << "TT count: " << countTT << "\n";
-  outFile << "TG count: " << countTG << "\n";
+  outFile << "TA probability: " << probTA << "\n";
+  outFile << "TC probability: " << probTC << "\n";
+  outFile << "TT probability: " << probTT << "\n";
+  outFile << "TG probability: " << probTG << "\n";
   outFile << "\n";
 
-  outFile << "GA count: " << countGA << "\n";
-  outFile << "GC count: " << countGC << "\n";
-  outFile << "GT count: " << countGT << "\n";
-  outFile << "GG count: " << countGG << "\n";
+  outFile << "GA probability: " << probGA << "\n";
+  outFile << "GC probability: " << probGC << "\n";
+  outFile << "GT probability: " << probGT << "\n";
+  outFile << "GG probability: " << probGG << "\n";
   outFile << "\n";
 
 
