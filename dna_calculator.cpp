@@ -281,12 +281,12 @@ void DNAcalculator::outputToFile(){
   outFile << "standard deviation: " << stdeviation << "\n";
   outFile << "\n";
 
-  outFile << "-----nucleotide counter-----" << "\n";
-  outFile << "A count: " << countA << "\n";
-  outFile << "C count: " << countC << "\n";
-  outFile << "T count: " << countT << "\n";
-  outFile << "G count: " << countG << "\n";
-  outFile << "\n";
+  // outFile << "-----nucleotide counter-----" << "\n";
+  // outFile << "A count: " << countA << "\n";
+  // outFile << "C count: " << countC << "\n";
+  // outFile << "T count: " << countT << "\n";
+  // outFile << "G count: " << countG << "\n";
+  // outFile << "\n";
 
   outFile << "-----nucleotide probability-----" << "\n";
   outFile << "A probability: " << probA << "\n";
@@ -295,7 +295,7 @@ void DNAcalculator::outputToFile(){
   outFile << "G probability: " << probG << "\n";
   outFile << "\n";
 
-  outFile << "-----bigram counter-----" << "\n";
+  outFile << "-----bigram probability-----" << "\n";
   outFile << "AA probability: " << probAA << "\n";
   outFile << "AC probability: " << probAC << "\n";
   outFile << "AT probability: " << probAT << "\n";
@@ -325,8 +325,6 @@ void DNAcalculator::outputToFile(){
   for(int i = 0; i < 1000; ++i){
     outFile << nucleotideString(gaussianLengthGenerator()) << "\n";
   }
-
-  // outFile << randNucleotideTester() << "\n";
 
   outFile.close();
 }

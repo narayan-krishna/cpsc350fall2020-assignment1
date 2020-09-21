@@ -3,10 +3,11 @@
 //main -- intially takes a command line argument as input, and then uses
 //cin to continue processing files.
 int main(int argc, char **argv){
+  cout << "FINAL TEST" << endl;
   if(argc != 2){
     cout << "command line requires a file input" << endl;
     cout << "example: " << endl;
-    cout << "'./a.out sequences.txt'" << endl;
+    cout << "'./assignment1.exe sequences.txt'" << endl;
   }
   else{
     DNAcalculator *calc1 = new DNAcalculator(argv[1]);
